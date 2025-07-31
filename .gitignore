@@ -1,6 +1,5 @@
 input/*
 !input/.gitkeep
-!input/example.jpg
 
 output/*
 !output/.gitkeep
