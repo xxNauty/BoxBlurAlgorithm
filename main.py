@@ -1,10 +1,7 @@
 from dotenv import load_dotenv
-from pathlib import Path
-from shutil import copy
 from blur import blur
 import os
-from file_processors import json_processor
-
+import uuid
 
 def list_files_in_dir(directory) -> list[str]:
     return [os.path.join(directory, f) for f in os.listdir(directory)
@@ -12,19 +9,13 @@ def list_files_in_dir(directory) -> list[str]:
 
 load_dotenv()
 
-files = list_files_in_dir(os.getenv("INPUT_PATH"))
+files = list_files_in_dir("input/")
 files.remove("input/.gitkeep")
 
 for file in files:
-    working_dir = "output/" + Path(file).stem + "/"
 
-    if os.path.isdir(working_dir):
-        os.rmdir(working_dir)
+    dir_name = str(uuid.uuid4()).split("-")[0]
+    working_dir = "output/" + dir_name + "/"
 
     os.mkdir(working_dir)
-
-    copy(file, working_dir + os.path.basename(file))
-
-    json_processor.create_file(working_dir + "data")
-
     blur(file, working_dir)

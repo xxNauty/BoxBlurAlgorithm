@@ -1,8 +1,8 @@
+from file_processor import json_processor
 from PIL import Image
+import datetime
 import time
 import os
-import datetime
-from file_processors import json_processor
 
 def format_step_number(number : str) -> str:
     if number[-1] == '1' and number != "11":
@@ -40,7 +40,6 @@ def blur(path_to_image : str, where_to_write: str) -> None:
         for i in range(width):
             for j in range(height):
                 r_value = g_value = b_value = 0
-                number_of_values = 0
 
                 start_x = i - 1 if i - 1 >= 0 else 0
                 end_x = i + 2 if i + 2 < width else width
@@ -56,7 +55,7 @@ def blur(path_to_image : str, where_to_write: str) -> None:
                         g_value += g
                         b_value += b
 
-                        number_of_values += 1
+                number_of_values = (end_x - start_x) * (end_y - start_y)
 
                 r_value = r_value // number_of_values
                 g_value = g_value // number_of_values
@@ -72,14 +71,10 @@ def blur(path_to_image : str, where_to_write: str) -> None:
         time_of_step = f"{end_time_of_step - start_time_of_step:.2f} seconds"
         time_of_every_step["Step " + str(step)] = time_of_step
 
-        print("Time of step:" + time_of_step)
+        print("Time of step: " + time_of_step)
 
-    output_file_name = (
-            where_to_write +
-            "/output." +
-            os.getenv("OUTPUT_FORMAT")
-    )
-    output_image.save(output_file_name)
+    input_image.save(where_to_write + "/input." + input_image.format.lower())
+    output_image.save(where_to_write + "/output." + input_image.format.lower())
 
     datetime_of_mod = datetime.datetime.now()
     time_of_modification = datetime_of_mod.strftime("%H:%M:%S")
