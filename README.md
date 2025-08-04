@@ -13,7 +13,7 @@ features, like for example information about how long took the algorithm to blur
 
 - Easily customizable blur intensity
 - Time measurement: while the algorithm is working, there is an information how long does it take for every step to run. 
-At the end of program, the `.json` file with more detailed information is created.
+At the end of program, the `.json`, `.xml` or both (depending on the value set in `.env` file) files with more detailed information are created.
 - Customisation based on `.env` file
 
 
@@ -32,11 +32,12 @@ often used as a building block for more complex filters.
 ## Usage
 1. Paste all images You want to blur into `input/` directory. There is no need for special filenames or any other preparation.
 2. In `.env` file set the intensity value (recommended are values under 40, above this value there are many distortions).
-3. Run the `main.py` script and wait for it to do the magic.
-4. When the code is done, under the `output/` directory there are folders for every input file, inside every of them there are three files: 
+3. Choose which output format you want to use for blur statistics
+4. Run the `main.py` script and wait for it to do the magic.
+5. When the code is done, under the `output/` directory there are folders for every input file, inside every of them there are three files: 
    1. Input image, named `input` and the input file extension
    2. The result of code, named `output` and the input file extension
-   3. All the blurring statistics, under the `data.json` file
+   3. All the blurring statistics, under the `data.json`/`data.xml` file
 
 ## Contributing
 
