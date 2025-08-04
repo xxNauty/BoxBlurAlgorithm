@@ -1,4 +1,4 @@
-from file_processor import json_processor
+from file_processor import json_processor, xml_processor
 from PIL import Image
 import datetime
 import time
@@ -89,10 +89,17 @@ def blur(path_to_image : str, where_to_write: str) -> None:
         "Intensity": intensity,
         "Date of modification": date_of_modification,
         "Time of modification":time_of_modification,
-        "Total time:": total_time,
+        "Total time": total_time,
         "Time of every step": time_of_every_step
     }
 
-    json_processor.write(where_to_write + "data.json", statistics)
+    match os.getenv('STATISTICS_FORMAT'):
+        case 'json':
+            json_processor.write_json(where_to_write + "data.json", statistics)
+        case 'xml':
+            xml_processor.write_xml(where_to_write + "data.xml", statistics)
+        case 'BOTH':
+            json_processor.write_json(where_to_write + "data.json", statistics)
+            xml_processor.write_xml(where_to_write + "data.xml", statistics)
 
     time.sleep(2)
